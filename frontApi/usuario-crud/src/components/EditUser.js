@@ -64,58 +64,68 @@ const EditUser = () => {
             <h2>{id ? 'Editar Usuário' : 'Criar Novo Usuário'}</h2>
             {mensagem && <p>{mensagem}</p>}
             <form onSubmit={handleSubmit}>
-                <div>
-                    <label>Nome:</label>
-                    <input
-                        type="text"
-                        name="nome"
-                        value={usuario.nome}
-                        onChange={handleChange}
-                        required
-                    />
-                </div>
-                <div>
-                    <label>Login:</label>
-                    <input
-                        type="text"
-                        name="login"
-                        value={usuario.login}
-                        onChange={handleChange}
-                        required
-                    />
-                </div>
-                <div>
-                    <label>Senha:</label>
-                    <input
-                        type="password"
-                        name="senha"
-                        value={usuario.senha}
-                        onChange={handleChange}
-                        required
-                    />
-                </div>
-                <div>
-                    <label>Email:</label>
-                    <input
-                        type="email"
-                        name="email"
-                        value={usuario.email}
-                        onChange={handleChange}
-                        required
-                    />
-                </div>
-                <div>
-                    <label>Idade:</label>
-                    <input
-                        type="number"
-                        name="idade"
-                        value={usuario.idade}
-                        onChange={handleChange}
-                        required
-                    />
-                </div>
-                <button type="submit">{id ? 'Atualizar Usuário' : 'Criar Usuário'}</button>
-            </form>
+          <div className="mb-4">
+            <label className="block text-gray-700">Nome</label>
+            <input
+              name="nome"
+              type="text"
+              value={usuario.nome}
+              onChange={handleChange}
+              placeholder="Type here"
+              className="w-full border rounded px-4 py-2"
+            />
+          </div>
+          <div className="mb-4">
+            <label className="block text-gray-700">Login</label>
+            <input
+              name="login"
+              type="text"
+              value={usuario.login}
+              onChange={handleChange}
+              placeholder="Type here"
+              className="w-full border rounded px-4 py-2"
+            />
+          </div>
+          <div className="mb-4">
+            <label className="block text-gray-700">E-mail</label>
+            <input
+              name="email"
+              type="email"
+              value={usuario.email}
+              onChange={handleChange}
+              placeholder="Type here"
+              className="w-full border rounded px-4 py-2"
+            />
+          </div>
+          <div className="mb-4">
+            <label className="block text-gray-700">Password</label>
+            <input
+              name="senha"
+              type="password"
+              value={usuario.senha}
+              onChange={handleChange}
+              placeholder="********"
+              className="w-full border rounded px-4 py-2"
+            />
+          </div>
+          <div className="mb-4">
+            <label className="block text-gray-700">Idade</label>
+            <input
+              name="idade"
+              type="number"
+              value={usuario.idade}
+              onChange={handleChange}
+              placeholder="Enter your age"
+              className="w-full border rounded px-4 py-2"
+            />
+          </div>
+          <button
+            type="submit"
+            className="bg-gradient-to-r from-purple-500 to-pink-500 text-white px-6 py-2 rounded-lg w-full"
+          >
+            Create →
+          </button>
+        </form>
         </div>
     );
 };
