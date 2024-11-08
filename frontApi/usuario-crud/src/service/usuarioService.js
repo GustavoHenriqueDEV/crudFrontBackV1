@@ -6,7 +6,7 @@ const API_URL = 'http://localhost:8080/usuarios'; // Altere para a URL do seu ba
 export const getUsuarios = () => axios.get(`${API_URL}`);
 
 // Função para buscar um usuário por ID
-export const getUsuarioById = (id) => axios.get(`${API_URL}/usuarios/${id}`);
+export const getUsuarioById = (id) => axios.get(`${API_URL}/${id}`);
 
 // Função para criar um novo usuário
 export const createUsuario = (usuario) => axios.post(`${API_URL}`, usuario);
