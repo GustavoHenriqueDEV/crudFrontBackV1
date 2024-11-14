@@ -3,10 +3,14 @@ package com.Crudexample.crud;
 import com.Crudexample.crud.model.Usuario;
 import com.Crudexample.crud.repository.UsuarioRepository;
 import com.Crudexample.crud.service.UsuarioService;
+import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.boot.test.context.SpringBootTest;
+
+import java.util.Optional;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
@@ -22,10 +26,8 @@ class CrudApplicationTests {
 	@Test
 	public void testaCreateUser(){
 
-
 		Usuario mockUsuario = new Usuario(1L, "João Silva", "joao123", "senhaSegura", "joao@example.com", 30);
 		when(usuarioRepository.save(mockUsuario)).thenReturn(mockUsuario);
-
 
 		Usuario usuarioResult = usuarioService.create(mockUsuario);
 
@@ -40,4 +42,45 @@ class CrudApplicationTests {
 		verify(usuarioRepository, times(1)).save(usuarioResult);
 
  	}
+	 @Test
+	 public void deveriaLancarErroComNomeInvalido(){
+		 Usuario mockUsuario = new Usuario(1L, "", "joao123", "senhaSegura", "joao@example.com", 30);
+
+		 IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () ->{
+			 usuarioService.create(mockUsuario);
+		 } );
+		 assertEquals("O nome de usuario não pode ser invalido.", exception.getMessage());
+
+		 verify(usuarioRepository, never()).save(mockUsuario);
+	 }
+	@Test
+	public void testDeleteUserNotFound() {
+		// Arrange
+		int userId = 1;
+		when(usuarioRepository.findById(userId)).thenReturn(Optional.empty());
+
+		// Act & Assert
+		EntityNotFoundException exception = assertThrows(EntityNotFoundException.class, () -> {
+			usuarioService.delete(userId);
+		});
+
+		assertEquals("Usuário com ID 1 não encontrado.", exception.getMessage());
+		verify(usuarioRepository).findById(userId);
+		verify(usuarioRepository, never()).delete(any());
+	}
+	@Test
+	public void testDeleteUserSuccess() {
+		// Arrange
+		int userId = 1;
+		Usuario usuario = new Usuario(1L, "João Silva", "joao123", "senhaSegura", "joao@example.com", 30);
+		when(usuarioRepository.findById(userId)).thenReturn(Optional.of(usuario));
+
+		// Act
+		Usuario deletedUsuario = usuarioService.delete(userId);
+
+		// Assert
+		assertEquals(usuario, deletedUsuario);
+		verify(usuarioRepository).findById(userId);
+		verify(usuarioRepository).delete(usuario);
+	}
 }

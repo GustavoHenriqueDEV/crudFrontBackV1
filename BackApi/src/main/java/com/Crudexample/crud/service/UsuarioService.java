@@ -23,9 +23,12 @@ public class UsuarioService {
         return usuarioRepository.findByIdadeGreaterThan(idadeMaior);
     }
     public Usuario create(Usuario usuario){
-        return usuarioRepository.save(usuario);
+        if(usuario.getNome() == null || usuario.getNome().isEmpty()){
+            throw new IllegalArgumentException("O nome de usuario não pode ser invalido.");
+        }else{
+            return usuarioRepository.save(usuario);
+        }
     }
-
     public Usuario update(int id, Usuario usuarioDetails){
         return usuarioRepository.findById(id).map(usuario -> {
             // Atualiza os campos do usuário existente com os novos detalhes
